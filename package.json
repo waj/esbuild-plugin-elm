@@ -9,6 +9,7 @@
   "license": "MIT",
   "dependencies": {
     "command-exists": "^1.2.9",
+    "elm-hot": "waj/elm-hot#esbuild",
     "node-elm-compiler": "^5.0.6"
   },
   "peerDependencies": {

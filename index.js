@@ -2,6 +2,7 @@ const path = require('path');
 const fs = require('fs');
 const elmCompiler = require('node-elm-compiler');
 const cmdExists = require('command-exists').sync;
+const { inject } = require('elm-hot');
 
 const namespace = 'elm';
 const fileFilter = /\.elm$/;
@@ -18,7 +19,7 @@ const getPathToElm = () => {
 
 const toBuildError = error => ({ text: error.message });
 
-module.exports = ({ optimize = isProd(), debug, pathToElm: pathToElm_, clearOnWatch } = {}) => ({
+module.exports = ({ optimize = isProd(), debug, pathToElm: pathToElm_, clearOnWatch, hmr = false } = {}) => ({
   name: 'elm',
   setup(build) {
     const [error, pathToElm] = pathToElm_ ? [null, pathToElm_] : getPathToElm();
@@ -48,7 +49,14 @@ module.exports = ({ optimize = isProd(), debug, pathToElm: pathToElm_, clearOnWa
       }
 
       try {
-        const contents = elmCompiler.compileToStringSync([args.path], compileOptions);
+        var contents = elmCompiler.compileToStringSync([args.path], compileOptions);
+
+        if (hmr) {
+          contents = inject(contents);
+          if (typeof hmr === 'function') {
+            hmr(args.path, contents)
+          }
+        }
 
         return { contents };
       } catch (e) {

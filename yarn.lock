@@ -36,6 +36,10 @@ cross-spawn@6.0.5:
     shebang-command "^1.2.0"
     which "^1.2.9"
 
+elm-hot@waj/elm-hot#esbuild:
+  version "1.1.6"
+  resolved "https://codeload.github.com/waj/elm-hot/tar.gz/a9f1cb751bfbc261f9b43d0d31c9339870cc2217"
+
 esbuild-android-arm64@0.13.14:
   version "0.13.14"
   resolved "https://registry.yarnpkg.com/esbuild-android-arm64/-/esbuild-android-arm64-0.13.14.tgz#c85083ece26be3d67e6c720e088968a98409e023"
